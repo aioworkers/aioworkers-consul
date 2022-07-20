@@ -30,7 +30,7 @@ aioworkers = ">=0.19"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.10.1"
-mypy = "^0.961"
+mypy = "^0.971"
 flake8 = "^4.0.1"
 black = "^22.6"
 
