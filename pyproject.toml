@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = "aioworkers plugin for consul"
 readme = "README.rst"
 license = "Apache-2.0"
-requires-python = ">=3.6.2"
+requires-python = ">=3.7"
 authors = [
     { name = "Alexander Malev", email = "malev@somedev.ru" },
 ]
@@ -22,7 +22,6 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
@@ -72,7 +71,6 @@ cov = "coverage run -m pytest && coverage report"
 
 [[tool.hatch.envs.all.matrix]]
 python = [
-    "3.6",
     "3.7",
     "3.8",
     "3.9",
@@ -107,7 +105,6 @@ exclude_lines = [
 [tool.black]
 line-length = 120
 target-version = [
-    "py36",
     "py37",
     "py38",
     "py39",
