@@ -91,6 +91,7 @@ branch = true
 parallel = false
 source = [
     "aioworkers_consul",
+    "tests",
 ]
 
 [tool.coverage.report]
