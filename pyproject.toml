@@ -1,47 +1,162 @@
-[tool.poetry]
-name = "aioworkers-consul"
-version = "0.0.0"
-description = ""
-authors = ["Alexander Malev <malev@somedev.ru>"]
-license = "Apache Software License 2.0"
-readme = "README.rst"
-homepage = "https://github.com/aioworkers/aioworkers-consul"
-repository = "https://github.com/aioworkers/aioworkers-consul"
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
+[project]
+name = "aioworkers-consul"
+dynamic = ["version"]
+description = "aioworkers plugin for consul"
+readme = "README.rst"
+license = "Apache-2.0"
+requires-python = ">=3.6.2"
+authors = [
+    { name = "Alexander Malev", email = "malev@somedev.ru" },
+]
+keywords = [
+    "aioworkers",
+]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
-    "Intended Audience :: Developers",
     "Framework :: AsyncIO",
+    "Intended Audience :: Developers",
     "License :: OSI Approved :: Apache Software License",
-    "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+    "aioworkers>=0.21.1",
+]
+[project.optional-dependencies]
+dev-test = [
+    "aioworkers==0.21.1",
+    "coverage[toml]==7.2.6",
+    "pytest==7.3.1",
+    "pytest-aioworkers[asyncio]==0.4",
+    "pytest-mock==3.10.0",
+    "pyyaml==6.0",
+]
+dev-lint = [
+    "ruff==0.0.270",
+    "isort==5.12.0",
+    "black==23.3.0",
+    "mypy==1.3.0",
 ]
 
-packages = [
-    { include = "aioworkers_consul" },
+[project.urls]
+Homepage = "https://github.com/aioworkers/aioworkers-consul"
+Documentation = "https://github.com/aioworkers/aioworkers-consul#readme"
+Issues = "https://github.com/aioworkers/aioworkers-consul/issues"
+Source = "https://github.com/aioworkers/aioworkers-consul"
+
+[tool.hatch.version]
+path = "aioworkers_consul/__init__.py"
+
+[tool.hatch.build]
+include = [
+    "/aioworkers_consul",
 ]
 
-[tool.poetry.dependencies]
-python = "^3.6.2"
-aioworkers = ">=0.19"
+[tool.hatch.envs.default]
+features = [
+    "dev-test",
+]
+[tool.hatch.envs.default.scripts]
+cov = "coverage run -m pytest && coverage report"
 
-[tool.poetry.dev-dependencies]
-isort = "^5.10.1"
-mypy = "^0.971"
-flake8 = "^5.0.3"
-black = "^22.6"
+[[tool.hatch.envs.all.matrix]]
+python = [
+    "3.6",
+    "3.7",
+    "3.8",
+]
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = [
+    "aioworkers_consul",
+    "tests",
+]
+addopts = [
+    "--doctest-modules",
+]
 
-[tool.poetry-dynamic-versioning]
-enable = true
-# The pattern for git tag in pep440 format. It is the same as default but without the v prefix.
-pattern = "(?x)^(?P<base>\\d+\\.\\d+\\.\\d+)(-?((?P<stage>[a-zA-Z]+)\\.?(?P<revision>\\d+)?))?(\\+(?P<tagged_metadata>.+))?$"
+[tool.coverage.run]
+branch = true
+parallel = false
+source = [
+    "aioworkers_consul",
+    "tests",
+]
 
-[tool.poetry-dynamic-versioning.substitution]
-enable = true
+[tool.coverage.report]
+exclude_lines = [
+    "no cov",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
+
+[tool.black]
+line-length = 120
+target-version = [
+    "py36",
+    "py37",
+    "py38",
+]
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+force_single_line = false
+import_heading_localfolder = true
+include_trailing_comma = true
+
+[tool.mypy]
+follow_imports = "silent"
+strict_optional = true
+warn_redundant_casts = true
+ignore_missing_imports = true
+check_untyped_defs = true
+
+[tool.ruff]
+line-length = 120
+
+[tool.hatch.envs.lint]
+python = "3.8"
+features = [
+    "dev-lint",
+]
+[tool.hatch.envs.lint.scripts]
+typing = "mypy --install-types --non-interactive {args:aioworkers_consul tests}"
+style = [
+    "ruff {args:aioworkers_consul tests}",
+    "isort --check-only --diff {args:aioworkers_consul tests}",
+    "black --check --diff {args:aioworkers_consul tests}",
+]
+fmt = [
+    "ruff --fix {args:aioworkers_consul tests}",
+    "isort {args:aioworkers_consul tests}",
+    "black {args:aioworkers_consul tests}",
+    "style",
+]
+all = [
+    "style",
+    "typing",
+]
+
+[tool.hatch.envs.template]
+detached = true
+dependencies = [
+    "scaraplate",
+]
+[tool.hatch.envs.template.scripts]
+update = [
+    "scaraplate rollup --no-input {args:../cookiecutter-aioworkers-plugin} ."
+]
+clone = [
+    "git clone https://github.com/aioworkers/cookiecutter-aioworkers-plugin {args:../cookiecutter-aioworkers-plugin}"
+]
