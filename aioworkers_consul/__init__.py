@@ -5,7 +5,7 @@ from aioworkers.core.config import ValueExtractor
 from aioworkers.storage.http import Storage
 
 BASE = Path(__file__).parent
-
+__version__ = "0.0.0"
 configs = (BASE / "config.ini",)
 
 
