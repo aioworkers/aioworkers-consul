@@ -81,7 +81,6 @@ python = [
 asyncio_mode = "auto"
 testpaths = [
     "aioworkers_consul",
-    "tests",
 ]
 addopts = [
     "--doctest-modules",
