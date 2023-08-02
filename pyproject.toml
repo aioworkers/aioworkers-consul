@@ -48,6 +48,9 @@ dev-lint = [
     "mypy==1.4.1",
 ]
 
+[project.entry-points.aioworkers]
+consul = "aioworkers_consul"
+
 [project.urls]
 Homepage = "https://github.com/aioworkers/aioworkers-consul"
 Documentation = "https://github.com/aioworkers/aioworkers-consul#readme"
