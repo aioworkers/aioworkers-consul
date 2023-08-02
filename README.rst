@@ -24,7 +24,7 @@ aioworkers-consul
   :alt: Code style: Mypy
 
 .. image:: https://readthedocs.org/projects/aioworkers-consul/badge/?version=latest
-  :target: https://aioworkers-consul.readthedocs.io/en/latest/?badge=latest
+  :target: https://github.com/aioworkers/aioworkers-consul#readme
   :alt: Documentation Status
 
 .. image:: https://img.shields.io/pypi/pyversions/aioworkers-consul.svg
